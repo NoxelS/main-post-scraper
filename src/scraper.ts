@@ -60,6 +60,7 @@ const pool: Pool = createPool(<PoolConfig>{
     port: process.env.PORT
 });
 
-// Scrape every 5 minutes (https://crontab.guru is your best friend)
+// Scrape every 5 minutes if production mode is enabled (https://crontab.guru is your best friend)
 const interval = process.env.production ? '*/5 * * * *' : '* * * * *';
+console.log(`Scraping every ${process.env.production ? 'five minutes' : 'minute'}.`);
 schedule(interval, () => scrape(pool));
