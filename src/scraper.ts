@@ -15,7 +15,7 @@ export const itemSpacer = '\n\n';
 
 async function scrape(pool: Pool) {
     const browser = await launch(<LaunchOptions>{
-        headless: false,
+        headless: true,
         args: [
             "--no-sandbox",
             "--disable-gpu",
