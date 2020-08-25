@@ -21,6 +21,7 @@ async function scrape(pool: Pool) {
             "--disable-gpu",
         ]
     });
+
     const page = await browser.newPage();
     await page.goto(mainPost);
 
@@ -34,20 +35,16 @@ async function scrape(pool: Pool) {
 
     // Extract unique lines out of article
     items.forEach(item => {
-        const lines: string[] = item.split(/\r\n|\n|\r/).filter(lines => !!lines.length);
+        const lines: string[] = item.split(/\r\n|\n|\r/).filter(lines => !!lines.length);  // Remove empty lines
         const uniqueLinesObject = {};
-        lines.forEach(line => {
-            if (!uniqueLinesObject[line]) uniqueLinesObject[line] = 1;
-        });
+        lines.forEach(line => { if (!uniqueLinesObject[line]) uniqueLinesObject[line] = 1; }); // Add unique lines to object
         const uniqueLines: string[] = Object.keys(uniqueLinesObject);
-        if (uniqueLines[0].match(/^[0-3]?[0-9].[0-3]?[0-9].(?:[0-9]{2})?[0-9]{2}$/)) {
-            // Only real search results start with a date
-            articles.push(new Article(uniqueLines[1], uniqueLines[0], uniqueLines[2]));
+        if (uniqueLines[0].match(/^[0-3]?[0-9].[0-3]?[0-9].(?:[0-9]{2})?[0-9]{2}$/)) { // Only real search results start with a date
+            articles.push(new Article(uniqueLines[1], uniqueLines[0], uniqueLines[2])); // Make article
         }
     });
 
-    /** Store articles */
-    articles.forEach(article => storeArticle(article, pool));
+    articles.forEach(article => storeArticle(article, pool)); // Store articles
 
     await browser.close();
 }
