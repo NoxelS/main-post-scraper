@@ -1,7 +1,7 @@
 import { config } from 'dotenv';
 import { createPool, Pool, PoolConfig } from 'mysql';
 import { schedule } from 'node-cron';
-import { launch } from 'puppeteer';
+import { launch, LaunchOptions } from 'puppeteer';
 
 import { Article } from './article.model';
 import { storeArticle } from './storage';
@@ -14,7 +14,13 @@ export const mainPost = 'https://www.mainpost.de/anzeigen/suchen/immobilien/';
 export const itemSpacer = '\n\n';
 
 async function scrape(pool: Pool) {
-    const browser = await launch();
+    const browser = await launch(<LaunchOptions>{
+        headless: true,
+        args: [
+            "--no-sandbox",
+            "--disable-gpu",
+        ]
+    });
     const page = await browser.newPage();
     await page.goto(mainPost);
 
