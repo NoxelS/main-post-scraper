@@ -1,4 +1,4 @@
-FROM node:10
+FROM node:latest
 
 RUN apt-get update
 WORKDIR /usr/src/app
