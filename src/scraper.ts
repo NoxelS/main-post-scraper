@@ -19,7 +19,8 @@ async function scrape(pool: Pool) {
         args: [
             "--no-sandbox",
             "--disable-gpu",
-        ]
+        ],
+        "timeout": 0
     });
 
     const page = await browser.newPage();
@@ -57,7 +58,7 @@ const pool: Pool = createPool(<PoolConfig>{
     port: process.env.PORT
 });
 
-// Scrape every 5 minutes if production mode is enabled (https://crontab.guru is your best friend)
-const interval = process.env.production ? '*/5 * * * *' : '* * * * *';
-console.log(`Scraping every ${process.env.production ? 'five minutes' : 'minute'}.`);
+// Scrape every 15 minutes if production mode is enabled (https://crontab.guru is your best friend)
+const interval = process.env.production ? '*/15 * * * *' : '* * * * *';
+console.log(`Scraping every ${process.env.production ? '15 minutes' : 'minute'}.`);
 schedule(interval, () => scrape(pool));
