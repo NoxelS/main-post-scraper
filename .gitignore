@@ -41,6 +41,9 @@ build/Release
 node_modules/
 jspm_packages/
 
+# Because the project will be running in docker and local desktop
+package-lock.json
+
 # TypeScript v1 declaration files
 typings/
 
