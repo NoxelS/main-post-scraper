@@ -59,6 +59,6 @@ const pool: Pool = createPool(<PoolConfig>{
 });
 
 // Scrape every 15 minutes if production mode is enabled (https://crontab.guru is your best friend)
-const interval = process.env.production ? '*/15 * * * *' : '* * * * *';
+const interval = process.env.production ? '*/30 * * * *' : '* * * * *';
 console.log(`Scraping every ${process.env.production ? '15 minutes' : 'minute'}.`);
 schedule(interval, () => scrape(pool));
