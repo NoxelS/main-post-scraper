@@ -21,6 +21,18 @@ export class Article {
         return key.substring(0, this.keyLength);
     }
 
+    get isAboutCarport(): boolean {
+        const keywords = ['TG-Stpl.', 'Stellplatz', 'Stpl.', 'Stplz', 'Stellp', 'Stell'];
+        let result = false;
+        keywords.forEach(keyword => {
+            if(this.description.indexOf(keyword) !== -1) {
+                result = true;
+                console.log(keyword);
+            }
+        })
+        return result;
+    }
+
     private evaluateContact() {
         this.tel = this.description.indexOf('Tel.') !== -1 ? this.description.substring(this.description.indexOf('Tel.') + 4, this.description.length) : '';
         this.chiffre = this.description.indexOf('Chiffre') !== -1 ? this.description.substring(this.description.indexOf('Chiffre') + 8, this.description.length) : '';

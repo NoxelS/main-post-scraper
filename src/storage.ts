@@ -52,7 +52,11 @@ export function storeArticle(article: Article, pool: Pool) {
             console.log(`Found new article: "${article.title.length > 50 ? article.title.substr(0, 50) + '...' : article.title}"`);
             query('INSERT INTO `mainpost`.`articles` (`uID`, `title`, `date`, `description`, `tel`, `chiffre`) VALUES (?, ?, ?, ?, ?, ?);',
             [article.uniqueKey, article.title, article.date, article.description, article.tel, article.chiffre], err => {
-                if(err) { throw err } else { sendEmail(article); }
+                if(err) { throw err } else { 
+                    if(article.isAboutCarport) {
+                        sendEmail(article); 
+                    }
+                }
             }, pool)
         }
     }, pool);
